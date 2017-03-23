@@ -2,6 +2,7 @@ import cv2
 import numpy
 
 import warnings
+import sys
 
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -38,13 +39,18 @@ def show(img, name=None, mode='gray', *args, **kwargs):
 		name: optional, name of figure. can be used to modify an existing figure
 		rest: matplotlib.imshow args
 	"""
+
 	plt.ion()
 	if name:
 		fig = plt.figure(name)
 	else:
 		fig = plt.figure()
 
-	plt.imshow(img, mode, args, kwargs)
+	plt.imshow(img, mode, *args, **kwargs)
+
+	if not hasattr(sys, 'ps1'):   # test if being called from the interpreter
+		plt.ioff()
+		plt.show()
 	#return fig
 
 def close(fig='all'):
